@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui-custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/jquery.jqGrid.js" type="text/javascript"></script>
+ <script type="text/javascript">
+var contador=0;
+  
+  jQuery(document).ready(function(){
+	jQuery("#msj").jqGrid({
+		   
+		datatype: "json",
+		scroll: true,
+		  loadtext: 'Cargando...',
+	   	colNames:['ID','Mensaje', 'Hora'],
+	   	colModel:[
+	   		{name:'id', width:140,sortable:false},
+	   		{name:'mensaje',index:'mensaje', width:70},
+	   		{name:'hora',index:'hora', width:300}	
+	   	],
+	   	height:'200px',
+	   	viewrecords: true,
+
+	    caption:"Mensajes"
+	});
+
+
+  function generate() {
+  contador++;
+	if ($('#msj tr').length == 25){
+		$("#msj tr:last").remove();
+		
+	
+	}
+  
+	  
+	  var hoy = new Date();
+	  var shora = hoy.getHours()+':'+hoy.getMinutes()+':'+hoy.getSeconds();
+	  
+	  var data = {id:contador,mensaje:"mensaje",hora:shora};
+	  
+	  $("#msj").jqGrid('addRowData','myrowid', data, 'first');
+  	  $("#gview_msj .ui-jqgrid-bdiv>div").attr('style','height:360px;');
+  	
+  	
+  	
+  	
+ // $("#msj > tbody > tr:first").before("<tr tabindex=\"-1\" class=\"ui-widget-content jqgrow ui-row-ltr\">" +
+	//"<td>"+contador+"</td>" +"<td>mensaje</td>" +"<td>"+shora+"</td>" +"</tr>");
+  	
+  
+  }
+  setInterval(generate, 10);
+
+
+});  
+</script>
+  
+
+</head>
+<body>
+<table id="msj" ></table>
+			<br>
+</body>
+</html>
